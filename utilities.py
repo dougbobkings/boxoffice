@@ -16,16 +16,27 @@ def load_and_split_data():
     df = pd.read_csv('train.csv')
     run_eda(df)
     y = df.revenue
-    X = df[['budget', 'popularity', 'runtime']]
+    X = df[['budget', 'popularity', 'runtime','release_date','Is_en']]
     column_names = X.columns
     X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                         test_size=0.2,
                                                         random_state=1)
     return (X_train, X_test, y_train, y_test), column_names
 
+def load_test_data():
+    df = pd.read_csv('test.csv')
+    run_eda(df)
+    X = df[['id','budget', 'popularity', 'runtime','release_date','Is_en']]
+    return X
+    
+
 
 def run_eda(input_df):
     df = input_df.copy()
+    df['runtime'].fillna((df['runtime'].mean()), inplace=True)
+    df['release_date'] = pd.to_datetime(df['release_date'])
+    df['release_date'] = datetime.date.today().year
+    df = pd.get_dummies(df, prefix=['Is'], columns=['original_language'])
     return df
 
 
