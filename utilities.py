@@ -14,7 +14,7 @@ import textwrap
 
 def load_and_split_data():
     df = pd.read_csv('train.csv')
-
+    run_eda(df)
     y = df.revenue
     X = df[['budget', 'popularity', 'runtime']]
     column_names = X.columns
@@ -30,7 +30,7 @@ def run_eda(input_df):
 
 
 def test():
-    print('Hello from test')
+    print('Hello from test1')
 
 
 def cross_val(estimator, X_train, y_train, nfolds):
