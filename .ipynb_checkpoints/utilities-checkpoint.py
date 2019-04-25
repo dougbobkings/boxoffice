@@ -10,13 +10,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import textwrap
+from datetime import date
+import datetime
 
 
 def load_and_split_data():
     df = pd.read_csv('train.csv')
     run_eda(df)
     y = df.revenue
-    X = df[['budget', 'popularity', 'runtime','release_date','Is_en']]
+    X = df[['budget', 'popularity', 'runtime','release_date']]
     column_names = X.columns
     X_train, X_test, y_train, y_test = train_test_split(X, y,
                                                         test_size=0.2,
@@ -26,7 +28,7 @@ def load_and_split_data():
 def load_test_data():
     df = pd.read_csv('test.csv')
     run_eda(df)
-    X = df[['id','budget', 'popularity', 'runtime','release_date','Is_en']]
+    X = df[['id','budget', 'popularity', 'runtime','release_date']]
     return X
     
 
@@ -36,7 +38,6 @@ def run_eda(input_df):
     df['runtime'].fillna((df['runtime'].mean()), inplace=True)
     df['release_date'] = pd.to_datetime(df['release_date'])
     df['release_date'] = datetime.date.today().year
-    df = pd.get_dummies(df, prefix=['Is'], columns=['original_language'])
     return df
 
 
